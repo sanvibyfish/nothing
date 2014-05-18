@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="dialog" parent="@android:style/Theme.Dialog">
+　　<item name="android:windowFrame">@null</item>
+　　<item name="android:windowIsFloating">true</item>
+　　<item name="android:windowIsTranslucent">false</item>
+　　<item name="android:windowNoTitle">true</item>
+　　<item name="android:windowBackground">@color/transparent</item>
+　　<item name="android:backgroundDimEnabled">false</item>
+　　</style>
+
+    <style name="PopupAnimation" parent="@android:style/Theme.Dialog">  
+    <item name="android:windowEnterAnimation">@anim/push_up_in</item>  
+    <item name="android:windowExitAnimation">@anim/push_up_out</item>  
+   <item name="android:windowBackground">@android:color/transparent</item>
+    <item name="android:background">@android:color/transparent</item>
+    <item name="android:windowIsFloating">true</item>
+    <item name="android:windowNoTitle">true</item>
+                <item name="android:windowFrame">@null</item>  
+            <item name="android:windowIsTranslucent">false</item>  
+</style> 
+<style name="Widget" parent="android:Widget"></style>
+
+            <style name="Widget.TextView">
+    	<item name="android:textColor">@color/textview_selector</item>
+    </style>
+    
+                <style name="Widget.TextView.Scala">
+    	<item name="android:textColor">@color/textview_scala_selector</item>
+    </style>
+    
+                <style name="AnimationFade">  
+<!--   PopupWindow左右弹出的效果-->  
+<item name="android:windowEnterAnimation">@anim/push_left_in</item>  
+<item name="android:windowExitAnimation">@anim/out_righttoleft</item>  
+</style>  
+
+	<style name="Widget.Holo.SegmentedControl" parent="@android:style/Widget.CompoundButton.RadioButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:minWidth">45dp</item>
+        <item name="android:minHeight">@dimen/segmented_control_default_height</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:stretchColumns">0</item>
+
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/segmented_control_background</item>
+        <item name="android:button">@null</item>
+        <item name="android:textColor">@color/segmented_control_text</item>
+
+        <item name="lineColor">@null</item>
+        <item name="lineHeightUnselected">0dp</item>
+        <item name="lineHeightSelected">0dp</item>
+    </style>
+</resources>
