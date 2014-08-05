@@ -1,11 +1,5 @@
 package io.nothing.http;
 
-import io.nothing.http.BaseTask.OnInvokeAterListener;
-import io.nothing.http.BaseTask.OnInvokeBeforeListener;
-
-import android.app.ProgressDialog;
-import android.content.Context;
-
 public class Task extends BaseTask {
 
 	private OnTaskRequestListener onTaskRequestListener;
@@ -39,7 +33,7 @@ public class Task extends BaseTask {
 	
 
 	@Override
-	public Result request() throws Exception {
+	public Result request() {
 		if(onTaskRequestListener != null) {
 			return onTaskRequestListener.onRequest();
 		}
@@ -48,7 +42,7 @@ public class Task extends BaseTask {
 	
 	
 	public interface OnTaskRequestListener {
-		public Result onRequest() throws Exception;
+		public Result onRequest();
 	}
 
 

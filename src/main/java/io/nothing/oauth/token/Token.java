@@ -1,17 +1,17 @@
 package io.nothing.oauth.token;
 
+import android.text.TextUtils;
+import android.util.Log;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import io.nothing.oauth.config.DoubanConfig;
 import io.nothing.oauth.config.OAuthConfig;
 import io.nothing.oauth.config.QQConfig;
 import io.nothing.oauth.config.RenrenConfig;
 import io.nothing.oauth.config.SinaConfig;
 import io.nothing.oauth.config.TweiboConfig;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import android.text.TextUtils;
-import android.util.Log;
 
 public class Token {
 
@@ -22,6 +22,47 @@ public class Token {
 	private String mRefreshToken = "";
 	private long mExpiresIn;
 	private String mUid = "";
+
+  /**
+   * 开放平台类型
+   * QQ（0）、
+   * 新浪微博（1）、
+   * 腾讯微博（2）、
+   * 人人网（3）、
+   * 豆瓣网（4）、
+   * twitter（5）、
+   * facebook（6）。
+   */
+  private int type;
+
+  public String getSource(){
+    if(type == 0) {
+      return "qq_connect";
+    } else if (type == 1) {
+      return "sina";
+    }
+    return "reg";
+  }
+
+
+  private String tokenSecret;
+
+  private String nickName;
+
+  /**
+   * 开放平台性别（新浪微博、腾讯微博、人人网有，其他没有）
+   */
+  private int openSex;
+
+  /**
+   * 开放平台过期标识（人人网特有）
+   */
+  private String openExpire;
+
+  private String openAvatar;
+
+  private String openUid;
+
 
 	public Token() {
 	}
@@ -105,6 +146,8 @@ public class Token {
 				.currentTimeMillis() < mExpiresTime)));
 	}
 
+  public void getInfo(){};
+
 	@Override
 	public String toString() {
 		String date = new java.text.SimpleDateFormat("yyyy/MM/dd hh:mm:ss")
@@ -113,4 +156,43 @@ public class Token {
 				+ ";mRefreshToken:" + mRefreshToken + ";mUid:" + mUid;
 	}
 
+  public String getNickName() {
+    return nickName;
+  }
+
+  public void setNickName(String nickName) {
+    this.nickName = nickName;
+  }
+
+  public int getOpenSex() {
+    return openSex;
+  }
+
+  public void setOpenSex(int openSex) {
+    this.openSex = openSex;
+  }
+
+  public String getOpenAvatar() {
+    return openAvatar;
+  }
+
+  public void setOpenAvatar(String openAvatar) {
+    this.openAvatar = openAvatar;
+  }
+
+  public String getOpenUid() {
+    return openUid;
+  }
+
+  public void setOpenUid(String openUid) {
+    this.openUid = openUid;
+  }
+
+  public int getType() {
+    return type;
+  }
+
+  public void setType(int type) {
+    this.type = type;
+  }
 }

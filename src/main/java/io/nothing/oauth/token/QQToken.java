@@ -15,4 +15,6 @@ public class QQToken extends Token {
 			setExpiresIn(Long.valueOf(m.group(2)));
 		}
 	}
+
+
 }

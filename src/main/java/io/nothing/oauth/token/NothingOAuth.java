@@ -1,15 +1,18 @@
 package io.nothing.oauth.token;
 
-import io.nothing.oauth.OAuthDialog;
-import io.nothing.oauth.OAuthListener;
-import io.nothing.oauth.config.OAuthConfig;
-import io.nothing.oauth.AccessTokenKeeper;
 import android.content.Context;
 import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+
+import org.apache.http.Header;
+
+import io.nothing.oauth.AccessTokenKeeper;
+import io.nothing.oauth.OAuthDialog;
+import io.nothing.oauth.OAuthListener;
+import io.nothing.oauth.config.OAuthConfig;
 
 public class NothingOAuth {
 
@@ -45,23 +48,25 @@ public class NothingOAuth {
 		}
 		RequestParams params = mConfig.getRefreshTokenParams(refreshToken);
 		client.post(url, params, new AsyncHttpResponseHandler() {
-			@Override
-			public void onSuccess(String response) {
-				Token token = Token.make(response, mConfig);
-				if (token.isSessionValid()) {
-					mKeeper.keepAccessToken(mContext, token);
-				}
-				if (l != null) {
-					l.onSuccess(token);
-				}
-			}
 
-			@Override
-			public void onFailure(Throwable e, String response) {
-				if (l != null) {
-					l.onError(response);
-				}
-			}
+      @Override
+      public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+        Token token = Token.make(new String(responseBody), mConfig);
+        if (token.isSessionValid()) {
+          mKeeper.keepAccessToken(mContext, token);
+        }
+        if (l != null) {
+          l.onSuccess(token);
+        }
+      }
+
+      @Override
+      public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+        if (l != null) {
+          l.onError(new String(responseBody));
+        }
+      }
+
 		});
 	}
 

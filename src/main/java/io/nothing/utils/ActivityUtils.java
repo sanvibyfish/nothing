@@ -20,6 +20,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -27,6 +28,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -290,5 +292,13 @@ public class ActivityUtils {
         return drawable;
     }
 
+
+    public static View addListViewHeaderView(ListView listview,int layoutId, Context context) {
+      LayoutInflater mInflater = (LayoutInflater) context
+          .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+      View view = mInflater.inflate(layoutId,null);
+      listview.addHeaderView(view);
+      return view;
+    }
 
 }

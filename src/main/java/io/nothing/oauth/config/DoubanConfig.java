@@ -2,6 +2,9 @@ package io.nothing.oauth.config;
 
 import com.loopj.android.http.RequestParams;
 
+import io.nothing.oauth.OAuthInfoListener;
+import io.nothing.oauth.token.Token;
+
 public class DoubanConfig extends OAuthConfig {
 
 	String scope;
@@ -52,4 +55,8 @@ public class DoubanConfig extends OAuthConfig {
 		return params;
 	}
 
+  @Override
+  public void getInfo(Token token, OAuthInfoListener l) {
+
+  }
 }

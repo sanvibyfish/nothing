@@ -2,6 +2,9 @@ package io.nothing.oauth.config;
 
 import com.loopj.android.http.RequestParams;
 
+import io.nothing.oauth.OAuthInfoListener;
+import io.nothing.oauth.token.Token;
+
 public class TweiboConfig extends OAuthConfig {
 
 	public TweiboConfig(String appKey, String appSecret, String redirectUrl) {
@@ -44,4 +47,8 @@ public class TweiboConfig extends OAuthConfig {
 		return null;
 	}
 
+  @Override
+  public void getInfo(Token token, OAuthInfoListener l) {
+
+  }
 }

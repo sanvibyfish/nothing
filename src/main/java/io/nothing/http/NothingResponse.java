@@ -1,15 +1,12 @@
 package io.nothing.http;
 
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.security.Key;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import android.content.Context;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public abstract class NothingResponse<T extends Result> {
@@ -42,9 +39,15 @@ public abstract class NothingResponse<T extends Result> {
 		onSuccess((T) getActualClass().transfer(jsonObject));
 	}
 
+  public void transfer(String responseString) throws Exception {
+    onSuccess(responseString);
+  }
+
 	public abstract void onSuccess(List<T> response);
 
 	public abstract void onSuccess(T response);
+
+  public abstract void onSuccess(String responseString);
 	
 	public abstract void onFailure(int statusCode, Throwable e,
 			JSONObject errorResponse);

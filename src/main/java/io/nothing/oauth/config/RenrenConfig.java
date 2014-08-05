@@ -4,6 +4,9 @@ import android.text.TextUtils;
 
 import com.loopj.android.http.RequestParams;
 
+import io.nothing.oauth.OAuthInfoListener;
+import io.nothing.oauth.token.Token;
+
 public class RenrenConfig extends OAuthConfig {
 
 	String scope;
@@ -49,5 +52,12 @@ public class RenrenConfig extends OAuthConfig {
 
 		return params;
 	}
+
+
+  @Override
+  public void getInfo(final Token token, final OAuthInfoListener l) {
+
+  }
+
 
 }
