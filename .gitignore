@@ -3,3 +3,4 @@ gen/
 *.class
 build/
 .gradle/
+.DS_Store
