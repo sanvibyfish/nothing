@@ -484,6 +484,7 @@ public class EventBus {
                 SubscriberExceptionEvent exEvent = (SubscriberExceptionEvent) event;
                 Log.e(TAG, "Initial event " + exEvent.causingEvent + " caused exception in "
                         + exEvent.causingSubscriber, exEvent.throwable);
+
             } else {
                 if (logSubscriberExceptions) {
                     Log.e(TAG, "Could not dispatch event: " + event.getClass() + " to subscribing class "

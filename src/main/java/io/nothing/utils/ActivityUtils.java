@@ -3,6 +3,7 @@ package io.nothing.utils;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningTaskInfo;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -14,6 +15,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
@@ -30,6 +32,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import net.whosv.android.R;
 
 import java.util.List;
 
@@ -176,11 +180,17 @@ public class ActivityUtils {
 		jump(old, cls, requestCode,null);
 	}
 	
-	
-	public static void back(Context old, Intent intent){
+
+    public static void back(Context old, Intent intent) {
+        back(old, intent, null);
+    }
+	public static void back(Context old, Intent intent, Bundle mBundle){
 		   Activity activity = (Activity) old;
-		   activity.finish();
-		   activity.setResult(Activity.RESULT_OK, intent);
+           if (mBundle != null) {
+               intent.putExtras(mBundle);
+           }
+        activity.setResult(Activity.RESULT_OK, intent);
+        activity.finish();
 	}
 	
 	/**
@@ -199,17 +209,7 @@ public class ActivityUtils {
 		}
 	}
 	
-	public static void displayImage(Context context, String url,ImageView imageView){
-		imageView.setTag(url);
-		ImageLoader.getInstance(context).displayImage(url, imageView);
-	}
-	
-	
-	public static void displayImage(Context context, String url,ImageView imageView,String cacheDir){
-		imageView.setTag(url);
-		ImageLoader.getInstance(context,cacheDir).displayImage(url, imageView);
-	}
-	
+
 	public static void runInUIThread(Context context, final Toast toast){
 		final Activity activity = (Activity)context;
 	      activity.runOnUiThread(new Runnable() {
@@ -299,6 +299,61 @@ public class ActivityUtils {
       View view = mInflater.inflate(layoutId,null);
       listview.addHeaderView(view);
       return view;
+    }
+
+
+    // =========================================================================
+    // app版本信息
+    // =========================================================================
+    public static int getCurrentVersionCode(Context context) {
+        PackageInfo pinfo;
+        int versionCode;
+        try {
+            pinfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            versionCode = pinfo.versionCode;
+
+        } catch (PackageManager.NameNotFoundException e) {
+            versionCode = -1;
+            e.printStackTrace();
+        }
+        return versionCode;
+    }
+
+    public static String getCurrentVersionName(Context context) {
+        PackageInfo pinfo;
+        String versionName = null;
+        try {
+            pinfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            versionName = pinfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return versionName;
+    }
+
+    /**
+     * 创建快捷方式
+     * */
+
+    public static void createShortCut(Activity activity, int drawableResourceId) {
+        // 创建快捷方式的Intent
+        Intent shortcutintent = new Intent(
+                "com.android.launcher.action.INSTALL_SHORTCUT");
+        ComponentName comp = new ComponentName(activity.getPackageName(),
+                activity.getPackageName() + "." + activity.getLocalClassName());
+        Intent intent = new Intent(Intent.ACTION_MAIN).setComponent(comp);
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+
+        shortcutintent.putExtra(Intent.EXTRA_SHORTCUT_NAME,
+                activity.getString(R.string.app_name));
+        // 快捷图片
+        Parcelable icon = Intent.ShortcutIconResource.fromContext(
+                activity.getApplicationContext(), drawableResourceId);
+        shortcutintent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, icon);
+        // 点击快捷图片，运行的程序主入口
+        shortcutintent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, intent);
+        // 发送广播。OK
+        activity.sendBroadcast(shortcutintent);
     }
 
 }
